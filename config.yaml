@@ -1,0 +1,55 @@
+# 永久投资组合配置
+# 单项 1000 元，其中股票端可拆分为多支基金，股票总投入 1000 元，总计 4000 元
+#
+# 重要：请填写真实的买入时单位净值 (purchase_nav)，
+# 脚本会自动计算持有份额 = cost_basis / purchase_nav
+# 例如：500 元以净值 1.234 买入 → 份额 = 500 / 1.234 ≈ 405.19 份
+
+initial_principal: 4000
+cash_value: 1000
+
+# 再平衡预警阈值
+alert_upper: 0.35   # 权重高于 35% 触发预警
+alert_lower: 0.15   # 权重低于 15% 触发预警
+
+# 净值回溯天数（针对 QDII 等延迟更新的基金）
+lookback_days: 5
+
+# 持仓明细
+# purchase_nav: 买入当天的单位净值，用于反推实际份额
+positions:
+  - asset_class: 股票
+    fund_code: "000051"
+    fund_name: 沪深300ETF联接
+    purchase_nav: 1.8332     # TODO: 替换为实际买入净值
+    cost_basis: 500
+
+  - asset_class: 股票
+    fund_code: "000834"
+    fund_name: 大成纳指ETF
+    purchase_nav: 6.2381     # TODO: 替换为实际买入净值
+    cost_basis: 200
+
+  - asset_class: 股票
+    fund_code: "016452"
+    fund_name: 南方纳指ETF
+    purchase_nav: 2.2492     # TODO: 替换为实际买入净值
+    cost_basis: 200
+
+  - asset_class: 股票
+    fund_code: "017641"
+    fund_name: 标普500
+    purchase_nav: 1.6529     # TODO: 替换为实际买入净值
+    cost_basis: 100
+
+  - asset_class: 长债
+    fund_code: "003376"
+    fund_name: 7-10年国债
+    purchase_nav: 1.3609    # TODO: 替换为实际买入净值
+    cost_basis: 1000
+
+  - asset_class: 黄金
+    fund_code: "000216"
+    fund_name: 黄金ETF联接
+    purchase_nav: 3.5595     # TODO: 替换为实际买入净值
+    cost_basis: 1000

@@ -1,0 +1,38 @@
+name: Daily Portfolio Tracker
+
+on:
+  schedule:
+    # UTC 周日-周四 22:00 = 北京时间周一-周五 06:00（仅工作日）
+    - cron: "0 22 * * 0-4"
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tracker
+        run: python main.py
+
+      - name: Commit and push history file
+        run: |
+          git config user.name "portfolio-bot"
+          git config user.email "bot@portfolio.local"
+          git add data/portfolio_history.xlsx
+          git diff --cached --quiet || (
+            git commit -m "📊 $(date +'%Y-%m-%d') 日度净值更新" &&
+            git push
+          )
