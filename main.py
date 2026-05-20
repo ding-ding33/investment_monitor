@@ -9,6 +9,7 @@ from src.fetcher import fetch_all_navs
 from src.calculator import calculate_snapshot
 from src.storage import save_snapshot, read_last_navs
 from src.reporter import print_report
+from src.notifier import send_email_report
 
 
 def main():
@@ -40,6 +41,11 @@ def main():
 
     save_snapshot(snapshot)
     print_report(snapshot)
+
+    try:
+        send_email_report(snapshot, cfg)
+    except Exception as e:
+        print(f"[WARN] 邮件发送失败: {e}")
 
 
 if __name__ == "__main__":

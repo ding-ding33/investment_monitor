@@ -2,13 +2,23 @@ name: Daily Portfolio Tracker
 
 on:
   schedule:
-    # UTC 周日-周四 22:00 = 北京时间周一-周五 06:00（仅工作日）
-    - cron: "0 22 * * 0-4"
+    # UTC 周日-周四 22:17 = 北京时间周一-周五 06:17（仅工作日）
+    # 避开整点高峰，降低定时任务延迟/丢弃概率
+    - cron: "17 22 * * 0-4"
   workflow_dispatch:  # 允许手动触发
 
 jobs:
   track:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      # 直接使用仓库里已有的邮件 secrets；DEEPSEEK_API_KEY 这次不需要。
+      EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+      EMAIL_TO: ${{ secrets.EMAIL_TO }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
     permissions:
       contents: write
 

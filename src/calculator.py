@@ -144,6 +144,7 @@ def calculate_snapshot(
         "total_value": round(total_market_value, 2),
         "total_pnl_pct": round(total_pnl_pct, 2),
         "alerts": alerts,
+        "rebalance_needed": bool(alerts),
         "has_missing": has_missing,
         "asset_class_weights": asset_class_weights,
         "target_asset_class_weights": target_asset_class_weights,
