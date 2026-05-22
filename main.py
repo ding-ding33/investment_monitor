@@ -42,10 +42,7 @@ def main():
     save_snapshot(snapshot)
     print_report(snapshot)
 
-    try:
-        send_email_report(snapshot, cfg)
-    except Exception as e:
-        print(f"[WARN] 邮件发送失败: {e}")
+    send_email_report(snapshot, cfg)
 
 
 if __name__ == "__main__":
